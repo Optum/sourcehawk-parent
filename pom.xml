@@ -20,8 +20,9 @@
 
     <licenses>
         <license>
-            <name>GNU General Public License v3 (GPLv3)</name>
-            <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
         </license>
     </licenses>
 
@@ -138,6 +139,13 @@
                     <artifactId>maven-project-info-reports-plugin</artifactId>
                     <version>3.0.0</version>
                 </plugin>
+                <plugin>
+                    <artifactId>maven-deploy-plugin</artifactId>
+                    <version>3.0.0-M1</version>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
                 <!-- END: OFFICIAL MAVEN PLUGINS -->
 
                 <!-- START: THIRD PARTY MAVEN PLUGINS -->
@@ -227,8 +235,24 @@
                     <configuration>
                         <serverId>sonatype-nexus-staging</serverId>
                         <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                        <stagingProfileId>TODO</stagingProfileId> <!-- TODO: get this from Amy -->
+                        <stagingProfileId>com.optum</stagingProfileId>
                     </configuration>
+                    <executions>
+                        <execution>
+                            <id>deploy-staged</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>deploy</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>release</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>release</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
                 <!-- END: THIRD PARTY MAVEN PLUGINS -->
 
