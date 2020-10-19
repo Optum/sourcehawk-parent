@@ -1,0 +1,63 @@
+name: Maven CI
+on:
+  push:
+    branches:
+      - main
+      - 'releases/[1-9]+.[0-9]+.x'
+  pull_request:
+    branches:
+      - main
+      - 'releases/[1-9]+.[0-9]+.x'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v1
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: 8
+          server-id: sonatype-nexus-snapshots
+          server-username: SONATYPE_USERNAME
+          server-password: SONATYPE_PASSWORD
+          gpg-private-key: SONATYPE_GPG_PRIVATE_KEY
+          gpg-passphrase: SONATYPE_GPG_PASSPHRASE
+        env:
+          SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
+          SONATYPE_GPG_PRIVATE_KEY: ${{ secrets.SONATYPE_GPG_PRIVATE_KEY }}
+          SONATYPE_GPG_PASSPHRASE: ${{ secrets.SONATYPE_GPG_PASSPHRASE }}
+      - name: Setup Maven Build
+        shell: bash
+        run: |
+          BUILD_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -1)
+          [[ "$BUILD_VERSION" != *"-SNAPSHOT" ]] && BUILD_VERSION="${BUILD_VERSION}-SNAPSHOT" || true
+          ./mvnw --batch-mode versions:set -DnewVersion=$BUILD_VERSION
+      - name: Maven Build
+        if: success() && github.event_name == 'pull_request'
+        run: ./mvnw --batch-mode install -P ci.build
+      - name: Maven Build and Deploy Snapshots
+        if: success() && github.event_name == 'push'
+        run: ./mvnw --batch-mode deploy -P ci.deploy
+      - name: Aggregate Reports
+        id: aggregate
+        if: success()
+        run: |
+          JACOCO_XML_FILES=$(find . -name "jacoco.xml" -printf '%P\n' | tr '\r\n' ',')
+          echo ::set-output name=JACOCO_XML_FILES::$JACOCO_XML_FILES
+      - name: Publish Test Report
+        if: always()
+        uses: scacap/action-surefire-report@v1
+        with:
+          report_paths: '**/target/surefire-reports/TEST-*.xml,**/target/failsafe-reports/TEST-*.xml'
+      - name: Publish Codecov Report
+        if: always()
+        uses: codecov/codecov-action@v1
+        with:
+          files: ${{ steps.aggregate.outputs.JACOCO_XML_FILES }}

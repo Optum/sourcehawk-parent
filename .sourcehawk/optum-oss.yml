@@ -1,0 +1,31 @@
+api-version: 0.1
+
+file-protocols:
+  - name: Contributing
+    repository-path: CONTRIBUTING.md
+    enforcers:
+      - enforcer: .common.ContainsLine
+        expected-line: '[email]: mailto:opensource@optum.com'
+  - name: Individual Contributor License
+    repository-path: INDIVIDUAL_CONTRIBUTOR_LICENSE.md
+    enforcers:
+      - enforcer: .common.ContainsLineMatchingAt
+        expected-line-pattern: '(.*)Individual Contributor License Agreement(.*)'
+        expected-line-number: 1
+  - name: License
+    repository-path: LICENSE
+  - name: Notice
+    repository-path: NOTICE.txt
+    enforcers:
+      - enforcer: .common.ContainsLineAt
+        expected-line: 'sourcehawk'
+        expected-line-number: 1
+      - enforcer: .common.ContainsLineAt
+        expected-line: 'Copyright 2020 Optum'
+        expected-line-number: 3
+      - enforcer: .common.ContainsLine
+        expected-line: 'Project Description'
+      - enforcer: .common.ContainsLine
+        expected-line: '@brianwyka - Project Lead'
+      - enforcer: .common.ContainsLine
+        expected-line: '@ctoestriech - Project Lead'

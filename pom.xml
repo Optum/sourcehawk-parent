@@ -1,0 +1,314 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.0sd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.optum.sourcehawk</groupId>
+    <artifactId>sourcehawk-parent</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Sourcehawk Parent</name>
+    <description>Sourcehawk Parent Pom</description>
+
+    <inceptionYear>2020</inceptionYear>
+
+    <organization>
+        <name>Optum</name>
+        <url>https://optum.github.io/</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>GNU General Public License v3 (GPLv3)</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0.txt</url>
+        </license>
+    </licenses>
+
+    <properties>
+
+        <!-- VERSIONS -->
+        <maven.version>3.6.3</maven.version>
+
+        <!-- PLUGIN PROPERTY OVERRIDES -->
+        <flatten.mode>ossrh</flatten.mode> <!-- flatten-maven-plugin -->
+
+        <!-- ENCODING -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <!-- GLOBAL VARIABLES -->
+        <global.project.name>sourcehawk</global.project.name>
+
+    </properties>
+
+    <developers>
+        <developer>
+            <id>brianwyka</id>
+            <name>Brian Wyka</name>
+            <email>brian.wyka@optum.com</email>
+            <organization>optum</organization>
+            <roles>
+                <role>Project Lead</role>
+            </roles>
+        </developer>
+        <developer>
+            <id>ctoestreich</id>
+            <name>Christian Oestreich</name>
+            <email>christian.oestreich@optum.com</email>
+            <organization>optum</organization>
+            <roles>
+                <role>Project Lead</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <url>https://optum.github.io/sourcehawk/</url>
+
+    <scm>
+        <url>https://github.com/optum/sourcehawk-parent</url>
+        <connection>scm:git:https://github.com/optum/sourcehawk-parent.git</connection>
+        <developerConnection>scm:git:git@github.com:optum/sourcehawk-parent.git</developerConnection>
+    </scm>
+
+    <issueManagement>
+        <url>https://github.com/optum/sourcehawk-parent/issues</url>
+    </issueManagement>
+
+    <ciManagement>
+        <system>github</system>
+        <url>https://github.com/optum/sourcehawk-parent/actions</url>
+    </ciManagement>
+
+    <build>
+
+        <defaultGoal>install</defaultGoal>
+
+        <pluginManagement>
+            <plugins>
+
+                <!-- START: OFFICIAL MAVEN PLUGINS -->
+                <plugin>
+                    <artifactId>maven-clean-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>3.0.0-M3</version>
+                    <executions>
+                        <execution>
+                            <id>enforce-build-prerequisites</id>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <requireNoRepositories/>
+                                    <requireMavenVersion>
+                                        <version>${maven.version}</version>
+                                    </requireMavenVersion>
+                                </rules>
+                            </configuration>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <fail>true</fail>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>extra-enforcer-rules</artifactId>
+                            <version>1.2</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-install-plugin</artifactId>
+                    <version>3.0.0-M1</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.9.0</version>
+                </plugin>
+                <plugin>
+                    <artifactId>maven-project-info-reports-plugin</artifactId>
+                    <version>3.0.0</version>
+                </plugin>
+                <!-- END: OFFICIAL MAVEN PLUGINS -->
+
+                <!-- START: THIRD PARTY MAVEN PLUGINS -->
+                <plugin>
+                    <groupId>org.asciidoctor</groupId>
+                    <artifactId>asciidoctor-maven-plugin</artifactId>
+                    <version>2.0.0-RC.1</version>
+                </plugin>
+                <plugin>
+                    <groupId>com.spotify</groupId>
+                    <artifactId>dockerfile-maven-plugin</artifactId>
+                    <version>1.4.12</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>3.1.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>1.6.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>license-maven-plugin</artifactId>
+                    <version>2.0.0</version>
+                    <executions>
+                        <execution>
+                            <id>add-license-to-file-headers</id>
+                            <goals>
+                                <goal>update-file-header</goal>
+                            </goals>
+                            <phase>process-sources</phase>
+                            <configuration>
+                                <addJavaLicenseAfterPackage>false</addJavaLicenseAfterPackage>
+                                <licenseName>mit</licenseName>
+                                <projectName>${global.project.name}</projectName>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>versions-maven-plugin</artifactId>
+                    <version>2.7</version>
+                    <configuration>
+                        <generateBackupPoms>false</generateBackupPoms>
+                        <updateMatchingVersions>false</updateMatchingVersions>
+                        <processAllModules>true</processAllModules>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                    <version>1.2.2</version>
+                    <configuration>
+                        <flattenMode>${flatten.mode}</flattenMode>
+                        <outputDirectory>${project.build.directory}</outputDirectory>
+                        <pomElements>
+                            <build/>
+                            <profiles/>
+                        </pomElements>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>remove-flattened-poms</id>
+                            <goals>
+                                <goal>clean</goal>
+                            </goals>
+                            <phase>clean</phase>
+                        </execution>
+                        <execution>
+                            <id>flatten-poms</id>
+                            <goals>
+                                <goal>flatten</goal>
+                            </goals>
+                            <phase>process-resources</phase>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.sonatype.plugins</groupId>
+                    <artifactId>nexus-staging-maven-plugin</artifactId>
+                    <version>1.6.6</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <serverId>sonatype-nexus-staging</serverId>
+                        <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+                        <stagingProfileId>TODO</stagingProfileId> <!-- TODO: get this from Amy -->
+                    </configuration>
+                </plugin>
+                <!-- END: THIRD PARTY MAVEN PLUGINS -->
+
+            </plugins>
+        </pluginManagement>
+
+    </build>
+
+    <profiles>
+
+        <!-- DEFAULT: ALWAYS ACTIVE -->
+        <profile>
+            <id>default</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-enforcer-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- DEVELOPMENT: TEST -->
+        <profile>
+            <id>dev.test</id>
+            <properties>
+                <enforcer.skip>true</enforcer.skip> <!-- maven-enforcer-plugin -->
+            </properties>
+        </profile>
+
+        <!-- CI: BUILD -->
+        <profile>
+            <id>ci.build</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>flatten-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- CI: DEPLOY -->
+        <profile>
+            <id>ci.deploy</id>
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>sonatype-nexus-snapshots</id>
+                    <name>Sonatype Nexus Snapshots</name>
+                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+                </snapshotRepository>
+                <repository>
+                    <id>sonatype-nexus-staging</id>
+                    <name>Sonatype Nexus Releases</name>
+                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+                </repository>
+            </distributionManagement>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>flatten-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.plugins</groupId>
+                        <artifactId>nexus-staging-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
+    <modules>
+        <module>checkstyle-config</module>
+        <module>jar-parent</module>
+    </modules>
+
+</project>

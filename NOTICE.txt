@@ -1,0 +1,11 @@
+sourcehawk
+
+Copyright 2020 Optum
+
+Project Description:
+====================
+Sourcehawk is a suite of tools which enables development teams to automate compliance scans with configuration and code.
+
+Contributors:
+@brianwyka - Project Lead
+@ctoestriech - Project Lead

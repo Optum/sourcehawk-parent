@@ -1,0 +1,7 @@
+api-version: 0.1
+
+config-locations:
+  - .sourcehawk/optum-oss.yml
+  - .sourcehawk/lombok.yml
+  - .sourcehawk/maven-pom.yml
+  - .sourcehawk/maven-wrapper.yml

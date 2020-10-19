@@ -1,0 +1,6 @@
+api-version: 0.1
+
+config-locations:
+  - https://github.com/raw/optum/sourcehawk-parent/main/.sourcehawk/lombok.yml
+  - https://github.com/raw/optum/sourcehawk-parent/main/.sourcehawk/maven-pom.yml
+  - https://github.com/raw/optum/sourcehawk-parent/main/.sourcehawk/maven-wrapper.yml
