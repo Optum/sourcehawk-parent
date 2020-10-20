@@ -128,6 +128,19 @@
                     <version>3.1.0</version>
                 </plugin>
                 <plugin>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.6</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
                     <artifactId>maven-install-plugin</artifactId>
                     <version>3.0.0-M1</version>
                 </plugin>
@@ -230,29 +243,13 @@
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>1.6.6</version>
+                    <version>1.6.7</version>
                     <extensions>true</extensions>
                     <configuration>
-                        <serverId>sonatype-nexus-staging</serverId>
+                        <serverId>ossrh</serverId>
                         <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                        <stagingProfileId>com.optum</stagingProfileId>
+                        <autoReleaseAfterClose>true</autoReleaseAfterClose>
                     </configuration>
-                    <executions>
-                        <execution>
-                            <id>deploy-staged</id>
-                            <phase>deploy</phase>
-                            <goals>
-                                <goal>deploy</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>release</id>
-                            <phase>deploy</phase>
-                            <goals>
-                                <goal>release</goal>
-                            </goals>
-                        </execution>
-                    </executions>
                 </plugin>
                 <!-- END: THIRD PARTY MAVEN PLUGINS -->
 
@@ -304,21 +301,18 @@
             <id>ci.deploy</id>
             <distributionManagement>
                 <snapshotRepository>
-                    <id>sonatype-nexus-snapshots</id>
-                    <name>Sonatype Nexus Snapshots</name>
+                    <id>ossrh</id>
                     <url>https://oss.sonatype.org/content/repositories/snapshots</url>
                 </snapshotRepository>
-                <repository>
-                    <id>sonatype-nexus-staging</id>
-                    <name>Sonatype Nexus Releases</name>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-                </repository>
             </distributionManagement>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>flatten-maven-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-gpg-plugin</artifactId>
                     </plugin>
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
