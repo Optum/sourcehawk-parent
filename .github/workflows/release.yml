@@ -55,6 +55,7 @@ jobs:
           echo ::set-output name=RELEASE_VERSION::$RELEASE_VERSION
           ./mvnw clean && ./mvnw --batch-mode versions:set -DnewVersion=$RELEASE_VERSION
       - name: Build and Deploy
+        if: success()
         run: ./mvnw --batch-mode deploy -P ci.deploy
         env:
           DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
@@ -63,8 +64,21 @@ jobs:
         id: aggregate
         if: success()
         run: |
-          JACOCO_XML_FILES=$(find . -name "jacoco.xml" -printf '%P\n' | tr '\r\n' ',')
-          echo ::set-output name=JACOCO_XML_FILES::$JACOCO_XML_FILES
+          JACOCO_XML_REPORT_PATHS=$(find . -name "jacoco.xml" -printf '%P\n' | tr '\r\n' ',')
+          echo ::set-output name=JACOCO_XML_FILES::$JACOCO_XML_REPORT_PATHS
+      - name: Run Sonar Scan
+        if: success()
+        run: |
+          ./mvnw --batch-mode sonar:sonar \
+              -Dsonar.host.url=https://sonarcloud.io \
+              -Dsonar.login=$SONAR_TOKEN \
+              -Dsonar.organization=$SONAR_ORGANIZATION \
+              -Dsonar.coverage.jacoco.xmlReportPaths="$JACOCO_XML_REPORT_PATHS"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          JACOCO_XML_REPORT_PATHS: ${{ steps.aggregate.outputs.JACOCO_XML_REPORT_PATHS }}
+          SONAR_ORGANIZATION: ${{ github.repository_owner }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: Publish Test Report
         if: always()
         uses: scacap/action-surefire-report@v1
@@ -74,7 +88,7 @@ jobs:
         if: always()
         uses: codecov/codecov-action@v1
         with:
-          files: ${{ steps.aggregate.outputs.JACOCO_XML_FILES }}
+          files: ${{ steps.aggregate.outputs.JACOCO_XML_REPORT_PATHS }}
       - name: Tag
         if: success()
         run: git tag -a "v$RELEASE_VERSION" -m "Release v$RELEASE_VERSION triggered by @$GITHUB_ACTOR" && git push origin --tags
