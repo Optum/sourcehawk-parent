@@ -4,8 +4,16 @@ on:
     inputs:
       ref:
         description: 'Github Ref'
-        required: true
+        required: false
         default: 'main'
+      draft:
+        description: 'Is the release a draft?'
+        required: false
+        default: 'false'
+      prerelease:
+        description: 'Is this a pre-release?'
+        required: false
+        default: 'false'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -84,11 +92,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.setup.outputs.RELEASE_VERSION }}
-          release_name: ${{ github.event.repository.name }} v${{ steps.setup.outputs.RELEASE_VERSION }}
+          tag_name: ${{ format('v{0}', steps.setup.outputs.RELEASE_VERSION) }}
+          release_name: ${{ format({0} v{1}', github.event.repository.name, steps.setup.outputs.RELEASE_VERSION) }}
           body_path: CHANGELOG.md
-          draft: true
-          prerelease: false
+          draft: ${{ github.event.inputs.draft }}
+          prerelease: ${{ github.event.inputs.prerelease }}
       - name: Publish Github Pages
         if: success() && (github.event.inputs.ref == github.repository.default_branch)
         shell: bash
