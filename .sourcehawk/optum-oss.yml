@@ -1,6 +1,16 @@
 api-version: 0.1
 
 file-protocols:
+  - name: Code of Conduct
+    repository-path: CODE_OF_CONDUCT.md
+    enforcers:
+      - enforcer: .common.ContainsLine
+        expected-line: '# Contributor Covenant Code of Conduct'
+        expected-line-number: 0
+      - enforcer: .common.ContainsLine
+        expected-line: '[homepage]: http://contributor-covenant.org'
+      - enforcer: .common.ContainsLine
+        expected-line: '[email]: mailto:opensource@optum.com'
   - name: Contributing
     repository-path: CONTRIBUTING.md
     enforcers:
