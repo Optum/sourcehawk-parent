@@ -77,8 +77,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           JACOCO_XML_REPORT_PATHS: ${{ steps.aggregate.outputs.JACOCO_XML_REPORT_PATHS }}
-          SONAR_ORGANIZATION: ${{ github.repository_owner }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_ORGANIZATION: optum
+          SONAR_TOKEN: ${{ secrets.SONARCLOUD_TOKEN }}
       - name: Publish Test Report
         if: always()
         uses: scacap/action-surefire-report@v1
