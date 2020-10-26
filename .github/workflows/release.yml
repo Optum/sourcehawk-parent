@@ -25,12 +25,6 @@ jobs:
           ref: ${{ github.event.inputs.ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
           fetch-depth: 0
-      - uses: actions/cache@v1
-        with:
-          path: ~/.m2
-          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-m2
       - name: Setup Java and Maven
         uses: actions/setup-java@v1
         with:
@@ -60,11 +54,12 @@ jobs:
         if: success()
         uses: heinrichreimer/github-changelog-generator-action@v2.1.1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          output: CHANGELOG.md
           futureRelease: ${{ format('v{0}', steps.set_maven_project_version.outputs.RELEASE_VERSION) }}
-          usernamesAsGithubLogins: true
+          output: CHANGELOG.md
+          releaseBranch: ${{ github.event.inputs.ref }}
           stripGeneratorNotice: true
+          token: ${{ secrets.GITHUB_TOKEN }}
+          usernamesAsGithubLogins: true
       - name: Tag
         if: success()
         run: |
@@ -82,7 +77,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ format('v{0}', steps.set_maven_project_version.outputs.RELEASE_VERSION) }}
-          release_name: ${{ format('{0} v{1}', github.event.repository.name, steps.set_maven_project_version.outputs.RELEASE_VERSION) }}
+          release_name: ${{ format('{0} {1}', github.event.repository.name, steps.set_maven_project_version.outputs.RELEASE_VERSION) }}
           body_path: CHANGELOG.md
           draft: ${{ github.event.inputs.draft }}
           prerelease: ${{ github.event.inputs.prerelease }}
