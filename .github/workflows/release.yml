@@ -56,7 +56,7 @@ jobs:
         with:
           futureRelease: ${{ format('v{0}', steps.set_maven_project_version.outputs.RELEASE_VERSION) }}
           output: CHANGELOG.md
-          releaseBranch: main
+          releaseBranch: ${{ github.event.inputs.ref }}
           stripGeneratorNotice: true
           token: ${{ secrets.GITHUB_TOKEN }}
           usernamesAsGithubLogins: true
