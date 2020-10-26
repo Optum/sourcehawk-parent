@@ -44,12 +44,11 @@ jobs:
           server-id: ossrh
           server-username: SONATYPE_USERNAME
           server-password: SONATYPE_PASSWORD
-          gpg-private-key: SONATYPE_GPG_PRIVATE_KEY
+          gpg-private-key: ${{ secrets.SONATYPE_GPG_PRIVATE_KEY }}
           gpg-passphrase: SONATYPE_GPG_PASSPHRASE
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          SONATYPE_GPG_PRIVATE_KEY: ${{ secrets.SONATYPE_GPG_PRIVATE_KEY }}
           SONATYPE_GPG_PASSPHRASE: ${{ secrets.SONATYPE_GPG_PASSPHRASE }}
       - name: Set Maven Project Version
         shell: bash
