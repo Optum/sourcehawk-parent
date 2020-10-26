@@ -43,13 +43,18 @@ Manages plugins and profiles for all JAR based projects which extend it.
 ./mvnw clean install
 ```
 
-#### Skip Enforcer
+#### Dev Profiles
+Any project which inherits from this parent pom, will be able to use these as well.
+
+##### dev.test
+Skip Enforcer
 
 ```sh
 ./mvnw clean install -P dev.test
 ```
 
-#### Skip Enforcer, Static Code Analysis and Tests
+##### dev.min
+Skip Enforcer, Static Code Analysis and Tests
 
 ```sh
 ./mvnw clean install -P dev.min
