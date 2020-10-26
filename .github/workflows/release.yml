@@ -47,8 +47,8 @@ jobs:
           RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -1 | tr -d '\r\n')
           [[ "$RELEASE_VERSION" == *"-SNAPSHOT" ]] && RELEASE_VERSION="${RELEASE_VERSION%"-SNAPSHOT"}" || true
           [[ "$(git tag -l $RELEASE_VERSION)" == "$RELEASE_VERSION" ]] && echo "Tag $RELEASE_VERSION already exists" && exit 1
-          echo ::set-output name=RELEASE_VERSION::$RELEASE_VERSION
           ./mvnw --batch-mode versions:set -DnewVersion=$RELEASE_VERSION
+          echo ::set-output name=RELEASE_VERSION::$RELEASE_VERSION
       - name: Build Maven Project and Deploy Release
         if: success()
         run: ./mvnw --batch-mode deploy -P ci.deploy
