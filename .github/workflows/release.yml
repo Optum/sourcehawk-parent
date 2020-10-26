@@ -31,62 +31,45 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-m2
-      - name: Setup Java
+      - name: Setup Java and Maven
         uses: actions/setup-java@v1
         with:
           java-version: 8
           server-id: ossrh
           server-username: SONATYPE_USERNAME
           server-password: SONATYPE_PASSWORD
-          gpg-private-key: SONATYPE_GPG_PRIVATE_KEY
+          gpg-private-key: ${{ secrets.SONATYPE_GPG_PRIVATE_KEY }}
           gpg-passphrase: SONATYPE_GPG_PASSPHRASE
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
-          SONATYPE_GPG_PRIVATE_KEY: ${{ secrets.SONATYPE_GPG_PRIVATE_KEY }}
           SONATYPE_GPG_PASSPHRASE: ${{ secrets.SONATYPE_GPG_PASSPHRASE }}
-      - name: Setup Maven Build
-        id: setup
+      - name: Set Maven Project Version
+        id: set_maven_project_version
         shell: bash
         run: |
           RELEASE_VERSION=$(./mvnw help:evaluate -Dexpression=project.version -q -DforceStdout | tail -1 | tr -d '\r\n')
           [[ "$RELEASE_VERSION" == *"-SNAPSHOT" ]] && RELEASE_VERSION="${RELEASE_VERSION%"-SNAPSHOT"}" || true
           [[ "$(git tag -l $RELEASE_VERSION)" == "$RELEASE_VERSION" ]] && echo "Tag $RELEASE_VERSION already exists" && exit 1
           echo ::set-output name=RELEASE_VERSION::$RELEASE_VERSION
-          ./mvnw clean && ./mvnw --batch-mode versions:set -DnewVersion=$RELEASE_VERSION
-      - name: Build and Deploy
+          ./mvnw --batch-mode versions:set -DnewVersion=$RELEASE_VERSION
+      - name: Build Maven Project and Deploy Release
+        if: success()
         run: ./mvnw --batch-mode deploy -P ci.deploy
-        env:
-          DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-          DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      - name: Aggregate Reports
-        id: aggregate
-        if: success()
-        run: |
-          JACOCO_XML_FILES=$(find . -name "jacoco.xml" -printf '%P\n' | tr '\r\n' ',')
-          echo ::set-output name=JACOCO_XML_FILES::$JACOCO_XML_FILES
-      - name: Publish Test Report
-        if: always()
-        uses: scacap/action-surefire-report@v1
-        with:
-          report_paths: '**/target/surefire-reports/TEST-*.xml,**/target/failsafe-reports/TEST-*.xml'
-      - name: Publish Codecov Report
-        if: always()
-        uses: codecov/codecov-action@v1
-        with:
-          files: ${{ steps.aggregate.outputs.JACOCO_XML_FILES }}
-      - name: Tag
-        if: success()
-        run: git tag -a "v$RELEASE_VERSION" -m "Release v$RELEASE_VERSION triggered by @$GITHUB_ACTOR" && git push origin --tags
-        env:
-          RELEASE_VERSION: ${{ steps.setup.outputs.RELEASE_VERSION }}
       - name: Generate Changelog
+        if: success()
         uses: heinrichreimer/github-changelog-generator-action@v2.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           output: CHANGELOG.md
+          futureRelease: ${{ format('v{0}', steps.set_maven_project_version.outputs.RELEASE_VERSION) }}
           usernamesAsGithubLogins: true
           stripGeneratorNotice: true
+      - name: Tag
+        if: success()
+        run: git tag -a "v$RELEASE_VERSION" -m "Release v$RELEASE_VERSION triggered by @$GITHUB_ACTOR" && git push origin --tags
+        env:
+          RELEASE_VERSION: ${{ steps.set_maven_project_version.outputs.RELEASE_VERSION }}
       - name: Create Release
         if: success()
         uses: actions/create-release@v1
@@ -100,16 +83,10 @@ jobs:
           prerelease: ${{ github.event.inputs.prerelease }}
       - name: Publish Github Pages
         if: success() && (github.event.inputs.ref == github.repository.default_branch)
-        shell: bash
-        run: |
-          [[ ! -d 'gh-pages' ]] exit 0
-          git config user.name "$GIT_USER" && git config user.email "$GIT_EMAIL"
-          git add gh-pages/* --force && git commit -m "Publish github pages for release version $RELEASE_VERSION"
-          git fetch --all
-          git subtree split --prefix gh-pages -b gh-pages
-          git push origin gh-pages --force
-          git branch -D gh-pages && git reset HEAD~1
-        env:
-          GIT_USER: ${{ secrets.GIT_USER }}
-          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
-          RELEASE_VERSION: ${{ steps.setup.outputs.RELEASE_VERSION }}
+        uses: jamesives/github-pages-deploy-action@3.7.1
+        with:
+          COMMIT_MESSAGE: ${{ format('Publishing github pages for release version {0}', steps.set_maven_project_version.outputs.RELEASE_VERSION) }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY_NAME: optum/sourcehawk
+          BRANCH: gh-pages
+          FOLDER: build
