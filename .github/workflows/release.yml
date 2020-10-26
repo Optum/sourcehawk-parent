@@ -67,8 +67,13 @@ jobs:
           stripGeneratorNotice: true
       - name: Tag
         if: success()
-        run: git tag -a "v$RELEASE_VERSION" -m "Release v$RELEASE_VERSION triggered by @$GITHUB_ACTOR" && git push origin --tags
+        run: |
+          git config user.name "$GIT_USERNAME" && git config user.email "$GIT_EMAIL"
+          git tag -a "v$RELEASE_VERSION" -m "Release v$RELEASE_VERSION created by @$GITHUB_ACTOR"
+          git push origin --tags
         env:
+          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
           RELEASE_VERSION: ${{ steps.set_maven_project_version.outputs.RELEASE_VERSION }}
       - name: Create Release
         if: success()
