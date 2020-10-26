@@ -9,7 +9,7 @@
     <packaging>pom</packaging>
 
     <name>Sourcehawk Parent</name>
-    <description>Sourcehawk Parent Pom</description>
+    <description>Sourcehawk Parent Pom for supporting maven project inheritance</description>
 
     <inceptionYear>2020</inceptionYear>
 
