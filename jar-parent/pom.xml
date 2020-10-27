@@ -23,6 +23,7 @@
         <java.version>1.8</java.version>
         <groovy.version>3.0.4</groovy.version>
         <lombok.version>1.18.16</lombok.version>
+        <sourcehawk-checkstyle.version>${project.version}</sourcehawk-checkstyle.version>
 
         <!-- PLUGIN PROPERTY OVERRIDES -->
         <jacoco.coverage.minimum>0.90</jacoco.coverage.minimum> <!-- jacoco-maven-plugin -->
@@ -68,7 +69,7 @@
                         <dependency>
                             <groupId>com.optum.sourcehawk</groupId>
                             <artifactId>sourcehawk-checkstyle-config</artifactId>
-                            <version>${project.version}</version>
+                            <version>${sourcehawk-checkstyle.version}</version>
                         </dependency>
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
