@@ -21,7 +21,7 @@
 
         <!-- VERSIONS -->
         <java.version>1.8</java.version>
-        <groovy.version>3.0.4</groovy.version>
+        <groovy.version>3.0.6</groovy.version>
         <lombok.version>1.18.16</lombok.version>
         <checkstyle-config.version>${project.version}</checkstyle-config.version>
 
