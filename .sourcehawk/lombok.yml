@@ -17,17 +17,3 @@ file-protocols:
       - enforcer: .common.StringPropertyEquals
         property-name: lombok.anyConstructor.addConstructorProperties
         expected-property-value: true
-
-  - name: Maven Pom
-    description: maven pom.xml has correct configuration
-    group: maven
-    tags:
-      - maven
-    repository-path: pom.xml
-    enforcers:
-      - enforcer: .xml.XPathEquals
-        expectations:
-          "//project/name/text()": Sourcehawk
-      - enforcer: .xml.XPathEquals
-        expectations:
-          "//project/ciManagement/system/text()": jenkins
