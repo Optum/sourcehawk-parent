@@ -13,4 +13,4 @@ file-protocols:
           "//project/name/text()": Sourcehawk
       - enforcer: .xml.XPathEquals
         expectations:
-          "//project/ciManagement/system/text()": jenkins
+          "//project/ciManagement/system/text()": github
