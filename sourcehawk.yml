@@ -1,4 +1,3 @@
-api-version: 0.1
 
 config-locations:
   - .sourcehawk/optum-oss.yml
