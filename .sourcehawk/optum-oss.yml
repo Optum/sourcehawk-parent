@@ -5,7 +5,6 @@ file-protocols:
     enforcers:
       - enforcer: .common.ContainsLine
         expected-line: '# Contributor Covenant Code of Conduct'
-        expected-line-number: 0
       - enforcer: .common.ContainsLine
         expected-line: '[homepage]: http://contributor-covenant.org'
       - enforcer: .common.ContainsLine
@@ -33,7 +32,7 @@ file-protocols:
         expected-line: 'Copyright 2020 Optum'
         expected-line-number: 3
       - enforcer: .common.ContainsLine
-        expected-line: 'Project Description'
+        expected-line: 'Project Description:'
       - enforcer: .common.ContainsLine
         expected-line: '@brianwyka - Project Lead'
       - enforcer: .common.ContainsLine
