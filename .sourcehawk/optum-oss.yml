@@ -1,5 +1,7 @@
 
 file-protocols:
+  - name: Attribution
+    repository-path: attribution.txt
   - name: Code of Conduct
     repository-path: CODE_OF_CONDUCT.md
     enforcers:
