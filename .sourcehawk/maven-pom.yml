@@ -9,7 +9,4 @@ file-protocols:
     enforcers:
       - enforcer: .xml.XPathEquals
         expectations:
-          "//project/name/text()": Sourcehawk
-      - enforcer: .xml.XPathEquals
-        expectations:
           "//project/ciManagement/system/text()": github
