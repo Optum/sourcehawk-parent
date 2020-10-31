@@ -8,7 +8,7 @@
     <parent>
         <artifactId>sourcehawk-parent</artifactId>
         <groupId>com.optum.sourcehawk</groupId>
-        <version>1.0.4-SNAPSHOT</version>
+        <version>1.1.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>sourcehawk-jar-parent</artifactId>
@@ -21,6 +21,7 @@
 
         <!-- VERSIONS -->
         <java.version>1.8</java.version>
+        <java.release.version>8</java.release.version>
         <groovy.version>3.0.6</groovy.version>
         <lombok.version>1.18.16</lombok.version>
         <checkstyle-config.version>${project.version}</checkstyle-config.version>
@@ -69,7 +70,7 @@
                         <dependency>
                             <groupId>com.optum.sourcehawk</groupId>
                             <artifactId>sourcehawk-checkstyle-config</artifactId>
-                            <version>1.0.4-SNAPSHOT</version>
+                            <version>1.1.0-SNAPSHOT</version>
                         </dependency>
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
@@ -113,9 +114,10 @@
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
+                        <compilerId>javac</compilerId>
                         <compilerArgs> <!-- https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/javac.html#xlintwarnings -->
                             <arg>-Xlint:all</arg>
-                            <arg>-Xlint:-processing</arg>
+                            <arg>-Xlint:-processing</arg> <!-- Don't show warnings about annotations which don't have processors -->
                         </compilerArgs>
                         <failOnError>true</failOnError>
                         <failOnWarning>false</failOnWarning>
@@ -352,6 +354,42 @@
     </build>
 
     <profiles>
+
+        <!-- JAVA: 9+ BUILD -->
+        <profile>
+            <id>java.9-plus</id>
+            <activation>
+                <jdk>[9,</jdk>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <configuration>
+                            <release>${java.release.version}</release>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <configuration>
+                            <release>${java.release.version}</release>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <configuration>
+                            <argLine>--illegal-access=permit</argLine> <!--TODO: is this necessary -->
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <argLine>--illegal-access=permit</argLine> <!-- TODO: is this necessary -->
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
 
         <!-- JAVA: MAIN -->
         <profile>
