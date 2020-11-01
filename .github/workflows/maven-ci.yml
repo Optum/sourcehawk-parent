@@ -14,6 +14,7 @@ on:
       - 'INDIVIDUAL_CONTRIBUTOR_LICENSE.md'
       - 'LICENSE'
       - 'NOTICE.txt'
+      - 'OSSMETADATA'
       - '**/README.md'
   pull_request:
     branches:
@@ -29,6 +30,7 @@ on:
       - 'INDIVIDUAL_CONTRIBUTOR_LICENSE.md'
       - 'LICENSE'
       - 'NOTICE.txt'
+      - 'OSSMETADATA'
       - '**/README.md'
 jobs:
   build:
