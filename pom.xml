@@ -5,7 +5,7 @@
 
     <groupId>com.optum.sourcehawk</groupId>
     <artifactId>sourcehawk-parent</artifactId>
-    <version>1.1.0-SNAPSHOT</version>
+    <version>1.1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Sourcehawk Parent</name>
@@ -40,6 +40,10 @@
 
         <!-- GLOBAL VARIABLES -->
         <global.project.name>sourcehawk</global.project.name>
+
+        <!-- SONAR PROPERTIES -->
+        <sonar.organization>${global.project.name}</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
     </properties>
 
