@@ -5,7 +5,7 @@
 
     <groupId>com.optum.sourcehawk</groupId>
     <artifactId>sourcehawk-parent</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.2-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Sourcehawk Parent</name>
@@ -44,6 +44,9 @@
         <!-- SONAR PROPERTIES -->
         <sonar.organization>${global.project.name}</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.junit.reportPaths>**/target/surefire-reports/TEST-*.xml,**/target/failsafe-reports/TEST-*.xml,**/target/invoker-reports/BUILD-*.xml</sonar.junit.reportPaths>
+        <sonar.java.checkstyle.reportPaths>**/target/checkstyle-result.xml</sonar.java.checkstyle.reportPaths>
+        <sonar.coverage.jacoco.xmlReportPaths>**/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 
     </properties>
 
