@@ -3,6 +3,7 @@ sourcehawk-parent
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.optum.sourcehawk/sourcehawk-parent.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.optum.sourcehawk%22%20AND%20a:%22sourcehawk-parent%22) 
 [![Build Status](https://github.com/optum/sourcehawk-parent/workflows/Maven%20CI/badge.svg)](https://github.com/optum/sourcehawk-parent/actions) 
+[![Sourcehawk Scan](https://github.com/optum/sourcehawk-parent/workflows/Sourcehawk%20Scan/badge.svg)](https://github.com/optum/sourcehawk-parent/actions)
 
 Maven parent pom for all `sourcehawk` projects.
 
