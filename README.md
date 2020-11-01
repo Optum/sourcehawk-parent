@@ -20,7 +20,7 @@ Manages commonly used plugins and configurations across all types of packaging a
 <parent>
     <groupId>com.optum.sourcehawk</groupId>
     <artifactId>sourcehawk-parent</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
 </parent>
 ```
 
@@ -35,7 +35,7 @@ Manages plugins and profiles for all JAR based projects which extend it.
 <parent>
     <groupId>com.optum.sourcehawk</groupId>
     <artifactId>sourcehawk-jar-parent</artifactId>
-    <version>1.1.2</version>
+    <version>1.1.3</version>
 </parent>
 ```
 
