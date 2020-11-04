@@ -44,7 +44,7 @@ jobs:
           echo ::set-output name=RELEASE_VERSION::$RELEASE_VERSION
       - name: Build Maven Project and Deploy Release
         if: success()
-        run: ./mvnw --batch-mode deploy -P ci.deploy
+        run: ./mvnw --batch-mode deploy -D ci.deploy
         env:
           SONATYPE_USERNAME: ${{ secrets.SONATYPE_USERNAME }}
           SONATYPE_PASSWORD: ${{ secrets.SONATYPE_PASSWORD }}
