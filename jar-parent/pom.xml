@@ -8,7 +8,7 @@
     <parent>
         <artifactId>sourcehawk-parent</artifactId>
         <groupId>com.optum.sourcehawk</groupId>
-        <version>1.1.4-SNAPSHOT</version>
+        <version>1.1.5-SNAPSHOT</version>
     </parent>
 
     <artifactId>sourcehawk-jar-parent</artifactId>
@@ -70,7 +70,7 @@
                         <dependency>
                             <groupId>com.optum.sourcehawk</groupId>
                             <artifactId>sourcehawk-checkstyle-config</artifactId>
-                            <version>1.1.4-SNAPSHOT</version>
+                            <version>1.1.5-SNAPSHOT</version>
                         </dependency>
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
@@ -365,20 +365,22 @@
                 </file>
             </activation>
             <build>
-                <plugins>
-                    <plugin>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <configuration>
-                            <release>${java.release.version}</release>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <artifactId>maven-javadoc-plugin</artifactId>
-                        <configuration>
-                            <release>${java.release.version}</release>
-                        </configuration>
-                    </plugin>
-                </plugins>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <artifactId>maven-compiler-plugin</artifactId>
+                            <configuration>
+                                <release>${java.release.version}</release>
+                            </configuration>
+                        </plugin>
+                        <plugin>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <configuration>
+                                <release>${java.release.version}</release>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
             </build>
         </profile>
 
