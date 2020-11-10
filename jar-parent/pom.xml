@@ -8,7 +8,7 @@
     <parent>
         <artifactId>sourcehawk-parent</artifactId>
         <groupId>com.optum.sourcehawk</groupId>
-        <version>1.1.5-SNAPSHOT</version>
+        <version>1.1.6-SNAPSHOT</version>
     </parent>
 
     <artifactId>sourcehawk-jar-parent</artifactId>
@@ -70,7 +70,7 @@
                         <dependency>
                             <groupId>com.optum.sourcehawk</groupId>
                             <artifactId>sourcehawk-checkstyle-config</artifactId>
-                            <version>1.1.5-SNAPSHOT</version>
+                            <version>1.1.6-SNAPSHOT</version>
                         </dependency>
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
@@ -227,24 +227,19 @@
                     <version>3.0.0-M5</version>
                     <executions>
                         <execution>
-                            <id>integration-test</id>
+                            <id>default-cli</id>
                             <phase>integration-test</phase>
                             <goals>
                                 <goal>integration-test</goal>
+                                <goal>verify</goal>
                             </goals>
                             <configuration>
                                 <includes>
-                                    <include>**/*IntegrationSpec.groovy</include>
+                                    <include>**/*IntegrationSpec.class</include>
                                 </includes>
+                                <failIfNoTests>true</failIfNoTests>
                                 <testSourceDirectory>${basedir}/src/it/groovy</testSourceDirectory>
                             </configuration>
-                        </execution>
-                        <execution>
-                            <id>verify</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>verify</goal>
-                            </goals>
                         </execution>
                     </executions>
                 </plugin>
@@ -464,24 +459,44 @@
                 </file>
             </activation>
             <build>
+<!--                <testResources>-->
+<!--                    <testResource>-->
+<!--                        <directory>src/it/resources</directory>-->
+<!--                    </testResource>-->
+<!--                </testResources>-->
                 <plugins>
                     <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
                         <executions>
                             <execution>
-                                <id>add-integration-test-source</id>
-                                <phase>generate-test-sources</phase>
+                                <id>integration-test-resources</id>
                                 <goals>
-                                    <goal>add-test-source</goal>
+                                    <goal>testResources</goal>
                                 </goals>
                                 <configuration>
-                                    <sources>
-                                        <source>${project.basedir}/src/it/groovy</source>
-                                    </sources>
+                                    <resources>
+                                        <resource>
+                                            <directory>src/it/resources</directory>
+                                        </resource>
+                                    </resources>
                                 </configuration>
                             </execution>
                         </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.gmavenplus</groupId>
+                        <artifactId>gmavenplus-plugin</artifactId>
+                        <configuration combine.children="append">
+                            <testSources combine.children="append">
+                                <testSource>
+                                    <directory>${project.basedir}/src/it/groovy</directory>
+                                    <includes>
+                                        <include>**/*.groovy</include>
+                                    </includes>
+                                </testSource>
+                            </testSources>
+                        </configuration>
                     </plugin>
                     <plugin>
                         <artifactId>maven-failsafe-plugin</artifactId>

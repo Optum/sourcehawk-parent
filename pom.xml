@@ -5,7 +5,7 @@
 
     <groupId>com.optum.sourcehawk</groupId>
     <artifactId>sourcehawk-parent</artifactId>
-    <version>1.1.5-SNAPSHOT</version>
+    <version>1.1.6-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Sourcehawk Parent</name>
@@ -139,6 +139,7 @@
                     <version>3.2.0</version>
                     <configuration>
                         <encoding>${project.build.sourceEncoding}</encoding>
+                        <propertiesEncoding>${project.build.sourceEncoding}</propertiesEncoding>
                     </configuration>
                 </plugin>
                 <plugin>
