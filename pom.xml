@@ -5,7 +5,7 @@
 
     <groupId>com.optum.sourcehawk</groupId>
     <artifactId>sourcehawk-parent</artifactId>
-    <version>1.1.7-SNAPSHOT</version>
+    <version>1.1.8-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Sourcehawk Parent</name>
@@ -189,6 +189,29 @@
                     <version>2.1.0</version>
                 </plugin>
                 <plugin>
+                    <groupId>pl.project13.maven</groupId>
+                    <artifactId>git-commit-id-plugin</artifactId>
+                    <version>4.0.3</version>
+                    <executions>
+                        <execution>
+                            <id>generate-git-commit-info</id>
+                            <goals>
+                                <goal>revision</goal>
+                            </goals>
+                            <phase>initialize</phase>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <offline>true</offline>
+                        <runOnlyOnce>true</runOnlyOnce>
+                        <includeOnlyProperties>
+                            <includeOnlyProperty>^git.commit.time$</includeOnlyProperty>
+                            <includeOnlyProperty>^git.commit.id.abbrev$</includeOnlyProperty>
+                        </includeOnlyProperties>
+                        <commitIdGenerationMode>full</commitIdGenerationMode>
+                    </configuration>
+                </plugin>
+                <plugin>
                     <groupId>com.spotify</groupId>
                     <artifactId>dockerfile-maven-plugin</artifactId>
                     <version>1.4.13</version>
@@ -295,6 +318,10 @@
                     <plugin>
                         <artifactId>maven-enforcer-plugin</artifactId>
                     </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>flatten-maven-plugin</artifactId>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
@@ -315,14 +342,6 @@
                     <name>ci.build</name>
                 </property>
             </activation>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>flatten-maven-plugin</artifactId>
-                    </plugin>
-                </plugins>
-            </build>
         </profile>
 
         <!-- CI: DEPLOY -->
@@ -341,10 +360,6 @@
             </distributionManagement>
             <build>
                 <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>flatten-maven-plugin</artifactId>
-                    </plugin>
                     <plugin>
                         <artifactId>maven-gpg-plugin</artifactId>
                     </plugin>
