@@ -5,7 +5,7 @@
 
     <groupId>com.optum.sourcehawk</groupId>
     <artifactId>sourcehawk-parent</artifactId>
-    <version>1.1.8-SNAPSHOT</version>
+    <version>1.1.9-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Sourcehawk Parent</name>
@@ -38,8 +38,23 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- GLOBAL VARIABLES -->
+        <!-- GLOBAL ORGANIZATION -->
+        <global.organization.name>optum</global.organization.name>
+        <global.organization.email>opensource@optum.com</global.organization.email>
+
+        <!-- GLOBAL PROJECT -->
         <global.project.name>sourcehawk</global.project.name>
+        <global.project.description>Sourcehawk is an extensible compliance as code automation tool which allows development teams to run tailored compliance scans on their source code.</global.project.description>
+        <global.project.maintainer>brianwyka</global.project.maintainer>
+        <global.project.maintainer.name>Brian Wyka</global.project.maintainer.name>
+        <global.project.maintainer.email>brian.wyka@optum.com</global.project.maintainer.email>
+
+        <!-- BINTRAY -->
+        <bintray.organization>optum</bintray.organization>
+        <bintray.package>${global.project.name}</bintray.package>
+
+        <!-- DOCKER -->
+        <docker.organization>optumopensource</docker.organization>
 
         <!-- SONAR PROPERTIES -->
         <sonar.organization>${global.project.name}</sonar.organization>
@@ -55,7 +70,7 @@
             <id>brianwyka</id>
             <name>Brian Wyka</name>
             <email>brian.wyka@optum.com</email>
-            <organization>optum</organization>
+            <organization>Optum</organization>
             <roles>
                 <role>Project Lead</role>
             </roles>
@@ -64,7 +79,7 @@
             <id>ctoestreich</id>
             <name>Christian Oestreich</name>
             <email>christian.oestreich@optum.com</email>
-            <organization>optum</organization>
+            <organization>Optum}</organization>
             <roles>
                 <role>Project Lead</role>
             </roles>
@@ -203,7 +218,10 @@
                     </executions>
                     <configuration>
                         <offline>true</offline>
-                        <runOnlyOnce>true</runOnlyOnce>
+                        <dotGitDirectory>${maven.multiModuleProjectDirectory}/.git</dotGitDirectory>
+                        <skipPoms>false</skipPoms>
+                        <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                        <generateGitPropertiesFilename>${project.build.directory}/git.properties</generateGitPropertiesFilename>
                         <includeOnlyProperties>
                             <includeOnlyProperty>^git.commit.time$</includeOnlyProperty>
                             <includeOnlyProperty>^git.commit.id.abbrev$</includeOnlyProperty>
