@@ -44,7 +44,7 @@
 
         <!-- GLOBAL PROJECT -->
         <global.project.name>sourcehawk</global.project.name>
-        <global.project.description>Sourcehawk is an extensible compliance as code automation tool which allows development teams to run tailored compliance scans on their source code.</global.project.description>
+        <global.project.description>Sourcehawk is an extensible compliance as code automation tool which enables teams to run tailored compliance scans on their source code.</global.project.description>
         <global.project.maintainer>brianwyka</global.project.maintainer>
         <global.project.maintainer.name>Brian Wyka</global.project.maintainer.name>
         <global.project.maintainer.email>brian.wyka@optum.com</global.project.maintainer.email>
