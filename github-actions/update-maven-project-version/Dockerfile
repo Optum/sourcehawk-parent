@@ -1,4 +1,4 @@
-FROM frolvlad/alpine-bash:latest
+FROM adoptopenjdk/openjdk8:x86_64-alpine-jre8u282-b08
 
 # Need root to write
 USER root
