@@ -1,0 +1,24 @@
+name: 'Sourcehawk git-tag'
+description: 'Creates a git tag based on the supplied version and conditionally pushes it'
+inputs:
+  git-username:
+    description: 'The username to use (defaults to GITHUB_ACTOR)'
+    required: false
+  git-email:
+    description: 'The email to use'
+    required: true
+  tag-prefix:
+    description: 'The prefix to use for the tag'
+    required: false
+    default: 'v'
+  tag-version:
+    description: 'The tag version'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.git-username }}
+    - ${{ inputs.git-email }}
+    - ${{ inputs.tag-prefix }}
+    - ${{ inputs.tag-version }}
