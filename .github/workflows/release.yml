@@ -62,14 +62,11 @@ jobs:
           unreleasedOnly: true
       - name: Tag
         if: success()
-        run: |
-          git config user.name "$GIT_USERNAME" && git config user.email "$GIT_EMAIL"
-          git tag -a "v$RELEASE_VERSION" -m "Release v$RELEASE_VERSION created by @$GITHUB_ACTOR"
-          git push origin --tags
-        env:
-          GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
-          GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
-          RELEASE_VERSION: ${{ steps.set_maven_project_version.outputs.RELEASE_VERSION }}
+        uses: optum/sourcehawk-parent/github-actions/git-tag@github-actions
+        with:
+          git-username: ${{ secrets.GIT_USERNAME }}
+          git-email: ${{ secrets.GIT_EMAIL }}
+          tag-version: ${{ steps.set_maven_project_version.outputs.release_version }}
       - name: Create Release
         if: success()
         uses: actions/create-release@v1
