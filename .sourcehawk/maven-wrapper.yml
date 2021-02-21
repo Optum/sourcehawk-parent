@@ -2,7 +2,6 @@
 file-protocols:
   - name: Maven Wrapper
     description: Maven build wrapper
-    group: lombok
     tags:
       - lombok
       - config

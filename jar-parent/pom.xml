@@ -8,7 +8,7 @@
     <parent>
         <artifactId>sourcehawk-parent</artifactId>
         <groupId>com.optum.sourcehawk</groupId>
-        <version>1.1.9-SNAPSHOT</version>
+        <version>1.1.10-SNAPSHOT</version>
     </parent>
 
     <artifactId>sourcehawk-jar-parent</artifactId>
@@ -22,8 +22,8 @@
         <!-- VERSIONS -->
         <java.version>1.8</java.version>
         <java.release.version>8</java.release.version>
-        <groovy.version>3.0.6</groovy.version>
-        <lombok.version>1.18.16</lombok.version>
+        <groovy.version>3.0.7</groovy.version>
+        <lombok.version>1.18.18</lombok.version>
         <checkstyle-config.version>${project.version}</checkstyle-config.version>
 
         <!-- PLUGIN PROPERTY OVERRIDES -->
@@ -39,7 +39,7 @@
                 <!-- START: OFFICIAL MAVEN PLUGINS -->
                 <plugin>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>3.1.2</version>
                     <configuration>
                         <configLocation>checkstyle.xml</configLocation>
                         <includes>**/*.java,**/*.groovy</includes>
@@ -70,7 +70,7 @@
                         <dependency>
                             <groupId>com.optum.sourcehawk</groupId>
                             <artifactId>sourcehawk-checkstyle-config</artifactId>
-                            <version>1.1.9-SNAPSHOT</version>
+                            <version>1.1.10-SNAPSHOT</version>
                         </dependency>
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
@@ -196,7 +196,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-invoker-plugin</artifactId>
-                    <version>3.2.1</version>
+                    <version>3.2.2</version>
                     <configuration>
                         <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
                         <pomIncludes>
@@ -311,7 +311,7 @@
                 <plugin>
                     <groupId>org.codehaus.gmavenplus</groupId>
                     <artifactId>gmavenplus-plugin</artifactId>
-                    <version>1.11.0</version>
+                    <version>1.12.1</version>
                     <configuration>
                         <testSources>
                             <testSource>

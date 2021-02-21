@@ -2,7 +2,6 @@
 file-protocols:
   - name: Maven Pom
     description: maven pom.xml has correct configuration
-    group: maven
     tags:
       - maven
     repository-path: pom.xml
