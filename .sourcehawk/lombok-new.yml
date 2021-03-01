@@ -1,0 +1,13 @@
+
+file-protocols:
+  - name: Lombok Config
+    description: Lombok Configured appropriately
+    tags:
+      - lombok
+      - config
+    repository-path: lombok.config
+    required: true
+    severity: WARNING
+    enforcers:
+      - STRING-PROPERTY-EQUALS(config.stopBubbling, true)
+      - STRING-PROPERTY-EQUALS(lombok.addLombokGeneratedAnnotation, true)

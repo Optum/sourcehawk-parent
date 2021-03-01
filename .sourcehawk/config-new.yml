@@ -1,0 +1,6 @@
+
+config-locations:
+  - https://raw.githubusercontent.com/optum/sourcehawk-parent/main/.sourcehawk/lombok-new.yml
+  - https://raw.githubusercontent.com/optum/sourcehawk-parent/main/.sourcehawk/maven-pom-new.yml
+  - https://raw.githubusercontent.com/optum/sourcehawk-parent/main/.sourcehawk/maven-wrapper-new.yml
+  - https://raw.githubusercontent.com/optum/sourcehawk-parent/main/.sourcehawk/optum-oss-new.yml

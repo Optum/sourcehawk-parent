@@ -1,0 +1,12 @@
+
+file-protocols:
+  - name: Maven Wrapper
+    description: Maven build wrapper
+    tags:
+      - lombok
+      - config
+    repository-path: .mvn/wrapper/maven-wrapper.properties
+    required: true
+    severity: ERROR
+    enforcers:
+      - STRING-PROPERTY-EQUALS(distributionUrl, https://apache.claz.org/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip)

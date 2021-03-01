@@ -1,0 +1,9 @@
+
+file-protocols:
+  - name: Notice
+    repository-path: NOTICE.txt
+    enforcers:
+      - CONTAINS-LINE-AT(sourcehawk, 1)
+      - CONTAINS-LINE-MATCHING-AT(Copyright (.*) Optum, 3)
+      - CONTAINS-LINE(@brianwyka - Project Lead)
+      - CONTAINS-LINE(@ctoestriech - Project Lead)

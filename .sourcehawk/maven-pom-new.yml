@@ -1,0 +1,9 @@
+
+file-protocols:
+  - name: Maven Pom
+    description: maven pom.xml has correct configuration
+    tags:
+      - maven
+    repository-path: pom.xml
+    enforcers:
+      - X-PATH-EQUALS(//project/ciManagement/system/text(), github)
