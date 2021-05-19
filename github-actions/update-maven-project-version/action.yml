@@ -1,0 +1,12 @@
+name: 'Sourcehawk update-maven-project-version'
+description: 'Updates the maven project version in pom.xml files'
+inputs:
+  release-build:
+    description: 'Whether or not this is a release build'
+    required: false
+    default: 'false'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.release-build }}
