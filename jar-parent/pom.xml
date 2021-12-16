@@ -22,8 +22,8 @@
         <!-- VERSIONS -->
         <java.version>1.8</java.version>
         <java.release.version>8</java.release.version>
-        <groovy.version>3.0.7</groovy.version>
-        <lombok.version>1.18.18</lombok.version>
+        <groovy.version>3.0.9</groovy.version>
+        <lombok.version>1.18.22</lombok.version>
         <checkstyle-config.version>${project.version}</checkstyle-config.version>
 
         <!-- PLUGIN PROPERTY OVERRIDES -->
@@ -75,7 +75,7 @@
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.36.2</version>
+                            <version>9.2</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -152,7 +152,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.2.0</version>
+                    <version>3.3.1</version>
                     <executions>
                         <execution>
                             <id>attach-javadocs</id>
@@ -251,7 +251,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
-                    <version>3.6.0</version>
+                    <version>3.6.2</version>
                 </plugin>
                 <!-- END: OFFICIAL MAVEN PLUGINS -->
 
@@ -259,7 +259,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.6</version>
+                    <version>0.8.7</version>
                     <configuration>
                         <excludes>
                             <exclude>**/*Spec.*</exclude>
@@ -311,7 +311,7 @@
                 <plugin>
                     <groupId>org.codehaus.gmavenplus</groupId>
                     <artifactId>gmavenplus-plugin</artifactId>
-                    <version>1.12.1</version>
+                    <version>1.13.1</version>
                     <configuration>
                         <testSources>
                             <testSource>
