@@ -5,7 +5,7 @@
 
     <groupId>com.optum.sourcehawk</groupId>
     <artifactId>sourcehawk-parent</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.3.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Sourcehawk Parent</name>
@@ -48,10 +48,6 @@
         <global.project.maintainer>brianwyka</global.project.maintainer>
         <global.project.maintainer.name>Brian Wyka</global.project.maintainer.name>
         <global.project.maintainer.email>brian.wyka@optum.com</global.project.maintainer.email>
-
-        <!-- BINTRAY -->
-        <bintray.organization>optum</bintray.organization>
-        <bintray.package>${global.project.name}</bintray.package>
 
         <!-- DOCKER -->
         <docker.organization>optumopensource</docker.organization>
