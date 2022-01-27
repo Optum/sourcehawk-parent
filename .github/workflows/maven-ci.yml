@@ -45,7 +45,7 @@ jobs:
       - name: Setup Java and Maven
         uses: actions/setup-java@v1
         with:
-          java-version: 8
+          java-version: 11
           server-id: ossrh
           server-username: SONATYPE_USERNAME
           server-password: SONATYPE_PASSWORD

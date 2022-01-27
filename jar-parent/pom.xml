@@ -8,7 +8,7 @@
     <parent>
         <artifactId>sourcehawk-parent</artifactId>
         <groupId>com.optum.sourcehawk</groupId>
-        <version>1.1.9-SNAPSHOT</version>
+        <version>2.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>sourcehawk-jar-parent</artifactId>
@@ -20,10 +20,10 @@
     <properties>
 
         <!-- VERSIONS -->
-        <java.version>1.8</java.version>
-        <java.release.version>8</java.release.version>
-        <groovy.version>3.0.6</groovy.version>
-        <lombok.version>1.18.16</lombok.version>
+        <java.version>11</java.version>
+        <java.release.version>11</java.release.version>
+        <groovy.version>3.0.9</groovy.version>
+        <lombok.version>1.18.22</lombok.version>
         <checkstyle-config.version>${project.version}</checkstyle-config.version>
 
         <!-- PLUGIN PROPERTY OVERRIDES -->
@@ -39,7 +39,7 @@
                 <!-- START: OFFICIAL MAVEN PLUGINS -->
                 <plugin>
                     <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>3.1.2</version>
                     <configuration>
                         <configLocation>checkstyle.xml</configLocation>
                         <includes>**/*.java,**/*.groovy</includes>
@@ -70,12 +70,12 @@
                         <dependency>
                             <groupId>com.optum.sourcehawk</groupId>
                             <artifactId>sourcehawk-checkstyle-config</artifactId>
-                            <version>1.1.9-SNAPSHOT</version>
+                            <version>2.0.0-SNAPSHOT</version>
                         </dependency>
                         <dependency>
                             <groupId>com.puppycrawl.tools</groupId>
                             <artifactId>checkstyle</artifactId>
-                            <version>8.36.2</version>
+                            <version>9.2</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -114,6 +114,7 @@
                     <configuration>
                         <source>${java.version}</source>
                         <target>${java.version}</target>
+                        <release>${java.release.version}</release>
                         <compilerId>javac</compilerId>
                         <compilerArgs> <!-- https://docs.oracle.com/javase/7/docs/technotes/tools/solaris/javac.html#xlintwarnings -->
                             <arg>-Xlint:all</arg>
@@ -152,7 +153,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.2.0</version>
+                    <version>3.3.1</version>
                     <executions>
                         <execution>
                             <id>attach-javadocs</id>
@@ -161,6 +162,9 @@
                             </goals>
                         </execution>
                     </executions>
+                    <configuration>
+                        <release>${java.release.version}</release>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <artifactId>maven-jar-plugin</artifactId>
@@ -196,7 +200,7 @@
                 </plugin>
                 <plugin>
                     <artifactId>maven-invoker-plugin</artifactId>
-                    <version>3.2.1</version>
+                    <version>3.2.2</version>
                     <configuration>
                         <cloneProjectsTo>${project.build.directory}/it</cloneProjectsTo>
                         <pomIncludes>
@@ -251,7 +255,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-plugin-plugin</artifactId>
-                    <version>3.6.0</version>
+                    <version>3.6.2</version>
                 </plugin>
                 <!-- END: OFFICIAL MAVEN PLUGINS -->
 
@@ -259,7 +263,7 @@
                 <plugin>
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
-                    <version>0.8.6</version>
+                    <version>0.8.7</version>
                     <configuration>
                         <excludes>
                             <exclude>**/*Spec.*</exclude>
@@ -311,7 +315,7 @@
                 <plugin>
                     <groupId>org.codehaus.gmavenplus</groupId>
                     <artifactId>gmavenplus-plugin</artifactId>
-                    <version>1.11.0</version>
+                    <version>1.13.1</version>
                     <configuration>
                         <testSources>
                             <testSource>
@@ -349,35 +353,6 @@
     </build>
 
     <profiles>
-
-        <!-- JAVA: 9+ BUILD -->
-        <profile>
-            <id>java.9-plus</id>
-            <activation>
-                <jdk>[9,</jdk>
-                <file>
-                    <exists>src/main/java/</exists>
-                </file>
-            </activation>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <artifactId>maven-compiler-plugin</artifactId>
-                            <configuration>
-                                <release>${java.release.version}</release>
-                            </configuration>
-                        </plugin>
-                        <plugin>
-                            <artifactId>maven-javadoc-plugin</artifactId>
-                            <configuration>
-                                <release>${java.release.version}</release>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
 
         <!-- JAVA: MAIN -->
         <profile>

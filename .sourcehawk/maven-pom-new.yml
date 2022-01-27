@@ -6,6 +6,4 @@ file-protocols:
       - maven
     repository-path: pom.xml
     enforcers:
-      - enforcer: .xml.XPathEquals
-        expectations:
-          "//project/ciManagement/system/text()": github
+      - X-PATH-EQUALS(//project/ciManagement/system/text(), github)

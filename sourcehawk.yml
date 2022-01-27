@@ -1,5 +1,6 @@
 
 config-locations:
+  - https://raw.githubusercontent.com/optum/.github/main/sourcehawk.yml
   - .sourcehawk/optum-oss.yml
   - .sourcehawk/maven-pom.yml
   - .sourcehawk/maven-wrapper.yml

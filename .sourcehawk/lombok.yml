@@ -2,7 +2,6 @@
 file-protocols:
   - name: Lombok Config
     description: Lombok Configured appropriately
-    group: lombok
     tags:
       - lombok
       - config
@@ -14,5 +13,5 @@ file-protocols:
         property-name: config.stopBubbling
         expected-property-value: true
       - enforcer: .common.StringPropertyEquals
-        property-name: lombok.anyConstructor.addConstructorProperties
+        property-name: lombok.addLombokGeneratedAnnotation
         expected-property-value: true
