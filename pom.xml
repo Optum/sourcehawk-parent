@@ -45,6 +45,7 @@
         <!-- GLOBAL PROJECT -->
         <global.project.name>sourcehawk</global.project.name>
         <global.project.description>Sourcehawk is an extensible compliance as code automation tool which enables teams to run tailored compliance scans on their source code.</global.project.description>
+        <global.project.url>https://optum.github.io/sourcehawk</global.project.url>
         <global.project.maintainer>brianwyka</global.project.maintainer>
         <global.project.maintainer.name>Brian Wyka</global.project.maintainer.name>
         <global.project.maintainer.email>brian.wyka@optum.com</global.project.maintainer.email>
@@ -82,7 +83,7 @@
         </developer>
     </developers>
 
-    <url>https://optum.github.io/sourcehawk/</url>
+    <url>${global.project.url}</url>
 
     <scm>
         <url>https://github.com/optum/sourcehawk-parent</url>
